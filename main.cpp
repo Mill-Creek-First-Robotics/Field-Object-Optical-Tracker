@@ -64,11 +64,10 @@ int main(int argc, char** argv)
 
         inRange(hsv, Scalar(0, 0, min_value), Scalar(255, 255, max_value), mask);
 
-        SimpleBlobDetector detector;
- 
+        cv::Ptr<cv::SimpleBlobDetector> detector = cv::SimpleBlobDetector::create(); 
         
         std::vector<KeyPoint> keypoints;
-        detector.detect( mask, keypoints);
+        detector->detect( mask, keypoints);
         
         
         Mat im_with_keypoints;
