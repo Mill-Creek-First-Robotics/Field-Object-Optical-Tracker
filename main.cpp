@@ -10,8 +10,8 @@ const int ESCAPE_KEY = 27;// ESC
 int cameraVFOV = 90;
 int cameraHHOV = 90;
 
-double min_value = 30;
-double max_value = 240;
+double min_value = 200;
+double max_value = 255;
 
 bool isExiting = false;
 
@@ -42,7 +42,7 @@ int main(int argc, char** argv)
                 std::cout << "Min val: " << min_value << std::endl;
                 break;
             case DECREASE_MIN_VALUE_KEY:
-                max_value--;
+                min_value--;
                 std::cout << "Min val: " << min_value << std::endl;
                 break;
             case ESCAPE_KEY:
@@ -63,12 +63,13 @@ int main(int argc, char** argv)
         Mat1b mask;
 
         inRange(hsv, Scalar(0, 0, min_value), Scalar(255, 255, max_value), mask);
+        Mat1b inv_mask;
+        bitwise_not(mask, inv_mask);  // Invert mask
 
         Ptr<SimpleBlobDetector> detector = SimpleBlobDetector::create(); 
         
         std::vector<KeyPoint> keypoints;
-        detector->detect( mask, keypoints);
-        
+        detector->detect( inv_mask, keypoints);
         
         Mat im_with_keypoints;
         drawKeypoints( mask, keypoints, im_with_keypoints, Scalar(0,0,255), DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
