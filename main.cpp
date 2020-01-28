@@ -64,7 +64,19 @@ int main(int argc, char** argv)
 
         inRange(hsv, Scalar(0, 0, min_value), Scalar(255, 255, max_value), mask);
 
-        imshow("this is you, smile! :)", mask);
+        SimpleBlobDetector detector;
+ 
+        
+        std::vector<KeyPoint> keypoints;
+        detector.detect( mask, keypoints);
+        
+        
+        Mat im_with_keypoints;
+        drawKeypoints( mask, keypoints, im_with_keypoints, Scalar(0,0,255), DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
+        
+        imshow("keypoints", im_with_keypoints );
+
+        
     }
     // the camera will be c1losed automatically upon exit
     // cap.close();
