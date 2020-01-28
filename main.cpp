@@ -64,7 +64,7 @@ int main(int argc, char** argv)
 
         inRange(hsv, Scalar(0, 0, min_value), Scalar(255, 255, max_value), mask);
 
-        cv::Ptr<cv::SimpleBlobDetector> detector = cv::SimpleBlobDetector::create(); 
+        Ptr<SimpleBlobDetector> detector = SimpleBlobDetector::create(); 
         
         std::vector<KeyPoint> keypoints;
         detector->detect( mask, keypoints);
