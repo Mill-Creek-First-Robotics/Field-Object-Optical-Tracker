@@ -3,10 +3,14 @@
 using namespace cv;
 
 const int INCREASE_MAX_VALUE_KEY = 116; // t
-const int DECREASE_MAX_VALUE_KEY = 103;// g
+const int DECREASE_MAX_VALUE_KEY = 103; // g
 const int INCREASE_MIN_VALUE_KEY = 121; // y
-const int DECREASE_MIN_VALUE_KEY = 104;// h
+const int DECREASE_MIN_VALUE_KEY = 104; // h
+const int SWITCH_CAMERA_KEY = 99; // c
 const int ESCAPE_KEY = 27;// ESC
+
+int cameraIndex = 0;
+
 int cameraVFOV = 90;
 int cameraHHOV = 90;
 
@@ -20,7 +24,7 @@ int main(int argc, char** argv)
     VideoCapture cap;
     // open the default camera, use something different from 0 otherwise;
     // Check VideoCapture documentation.
-    if(!cap.open(0))
+    if(!cap.open(cameraIndex))
         return 0;
     while(!isExiting)
     {
@@ -48,6 +52,14 @@ int main(int argc, char** argv)
             case ESCAPE_KEY:
                 std::cout << "Escape pressed!" << std::endl;
                 isExiting = true;
+                break;
+            case SWITCH_CAMERA_KEY:
+                cap.release();
+                cameraIndex++;
+                if(cameraIndex != 0 && !cap.open(cameraIndex)){
+                    cameraIndex = 0;
+                    cap.open(cameraIndex);
+                }
                 break;
             default:
                 std::cout << "Unknown key pressed: " << key_press << std::endl;
@@ -78,7 +90,7 @@ int main(int argc, char** argv)
 
         
     }
-    // the camera will be c1losed automatically upon exit
+    // the camera will be closed automatically upon exit
     // cap.close();
     return 0;
 }
