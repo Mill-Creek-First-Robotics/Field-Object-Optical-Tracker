@@ -86,6 +86,7 @@ int main(int argc, char** argv)
         Mat im_with_keypoints;
         drawKeypoints( mask, keypoints, im_with_keypoints, Scalar(0,0,255), DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
         
+        imshow("original", frame);
         imshow("keypoints", im_with_keypoints );
 
         
